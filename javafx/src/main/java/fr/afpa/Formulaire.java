@@ -9,10 +9,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
-
 
 /**
  * JavaFX App affichage d'un Hello World
@@ -29,6 +30,7 @@ public class Formulaire extends Application {
         String javafxVersion = SystemInfo.javafxVersion();
 
         // Instanciations
+        Label labelForm = new Label("Formulaire");
         Label labelInput = new Label("Entrée utilisateur :");
         Label labelCopy = new Label("Copie de l'entrée :");
         Button buttonCopy = new Button("Recopier");
@@ -36,7 +38,8 @@ public class Formulaire extends Application {
         Button buttonQuit = new Button("Quitter");
         TextField textInput = new TextField();
         TextField textLocked = new TextField();
-        // VBox vboxButtons = new VBox(buttonCopy, buttonClear, buttonQuit);
+        Double buttonWidth = 100.0;
+        Double textFieldWidth = 250.0;
 
         GridPane gridPane = new GridPane();
         gridPane.add(labelInput, 0, 0);
@@ -46,43 +49,66 @@ public class Formulaire extends Application {
         gridPane.add(labelCopy, 0, 2);
         gridPane.add(textLocked, 1, 2);
         gridPane.add(buttonQuit, 2, 2);
-        // gridPane.add(vboxButtons, 2, 0);
 
-        VBox vbox = new VBox(gridPane);
+        VBox vbox = new VBox(labelForm, gridPane);
+        VBox vboxDisplay = new VBox(vbox);
 
         // Settings
+        vbox.setSpacing(20);
         vbox.setAlignment(Pos.CENTER);
+        vbox.setStyle("-fx-border-style: solid inside;" +
+                "-fx-border-width: 2;" +
+                "-fx-border-insets: 5;" +
+                "-fx-border-radius: 5;" +
+                "-fx-border-color: #0d70a3;"+
+                "-fx-background-color : #ede9e3");
+        vbox.setMaxWidth(539);
+
+        vboxDisplay.setAlignment(Pos.CENTER);
+
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(20);
         gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(20, 5, 20, 5));
+        gridPane.setStyle("-fx-background-color : #ede9e3");
+
+        labelForm.setFont(new Font(18));
+        labelForm.setTextFill(Color.WHITE);
+        labelForm.setStyle("-fx-background-color : #0d70a3");
+        labelForm.setPadding(new Insets(10, 220, 10, 220));
 
         textInput.setText("Saississez un texte");
+        textInput.setPrefWidth(textFieldWidth);
         textLocked.setText(textInput.getText());
         textLocked.setDisable(true);
+        textLocked.setPrefWidth(textFieldWidth);
+        
 
         buttonCopy.setOnAction(value -> {
             textLocked.setText(textInput.getText());
         });
+        buttonCopy.setPrefWidth(buttonWidth);
 
         buttonClear.setOnAction(value -> {
             textLocked.clear();
         });
+        buttonClear.setPrefWidth(buttonWidth);
 
         buttonQuit.setOnAction(value -> {
             textInput.setText("GoodBye World !");
             textLocked.setText(textInput.getText());
-            //créer une PauseTransition de 1 secondes
+            // créer une PauseTransition de 1 secondes
             PauseTransition delay = new PauseTransition(Duration.seconds(1));
-            //définition de l'action suite à la pause
+            // définition de l'action suite à la pause
             delay.setOnFinished(e -> stage.close());
-            //démarrer la pause
+            // démarrer la pause
             delay.play();
         });
+        buttonQuit.setPrefWidth(buttonWidth);
 
-        
 
         // Assemblage
-        Scene scene = new Scene(vbox, 640, 480);
+        Scene scene = new Scene(vboxDisplay, 640, 480);
         stage.setScene(scene);
         stage.show();
     }

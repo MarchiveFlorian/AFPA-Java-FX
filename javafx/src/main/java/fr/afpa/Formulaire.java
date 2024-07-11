@@ -26,8 +26,6 @@ public class Formulaire extends Application {
 
     @Override
     public void start(Stage stage) {
-        String javaVersion = SystemInfo.javaVersion();
-        String javafxVersion = SystemInfo.javafxVersion();
 
         // Instanciations
         Label labelForm = new Label("Formulaire");
@@ -61,8 +59,8 @@ public class Formulaire extends Application {
                 "-fx-border-width: 2;" +
                 "-fx-border-insets: 5;" +
                 "-fx-border-radius: 5;" +
-                "-fx-border-color: #34a4df;"+
-                "-fx-background-color : #ede9e3"+
+                "-fx-border-color: #34a4df;" +
+                "-fx-background-color : #ede9e3" +
                 "-fx-effect: dropshadow: (gaussian, black, 7, 6, 0, -1 ;");
         vbox.setMaxWidth(539);
 
@@ -84,7 +82,6 @@ public class Formulaire extends Application {
         textLocked.setText(textInput.getText());
         textLocked.setDisable(true);
         textLocked.setPrefWidth(textFieldWidth);
-        
 
         buttonCopy.setOnAction(value -> {
             textLocked.setText(textInput.getText());
@@ -108,11 +105,9 @@ public class Formulaire extends Application {
         });
         buttonQuit.setPrefWidth(buttonWidth);
 
-
         // Assemblage
         Scene scene = new Scene(vboxDisplay, 640, 480);
         stage.setScene(scene);
         stage.show();
     }
-
 }

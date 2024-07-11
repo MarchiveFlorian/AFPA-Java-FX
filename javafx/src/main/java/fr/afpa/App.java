@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
-
 /**
  * JavaFX App affichage d'un Hello World
  */
@@ -33,11 +32,11 @@ public class App extends Application {
 
         button.setOnAction(value -> {
             label.setText("Goodbye World ! ");
-            //créer une PauseTransition de 3 secondes
+            // créer une PauseTransition de 3 secondes
             PauseTransition delay = new PauseTransition(Duration.seconds(1));
-            //définition de l'action suite à la pause
+            // définition de l'action suite à la pause
             delay.setOnFinished(e -> stage.close());
-            //démarrer la pause
+            // démarrer la pause
             delay.play();
         });
 

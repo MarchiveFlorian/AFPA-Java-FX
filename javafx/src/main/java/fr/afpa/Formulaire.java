@@ -1,6 +1,7 @@
 package fr.afpa;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -51,8 +52,13 @@ public class Formulaire extends Application {
 
         // Settings
         vbox.setAlignment(Pos.CENTER);
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(20);
+        gridPane.setVgap(10);
+
         textInput.setText("Saississez un texte");
         textLocked.setText(textInput.getText());
+        textLocked.setDisable(true);
 
         buttonCopy.setOnAction(value -> {
             textLocked.setText(textInput.getText());
@@ -65,7 +71,7 @@ public class Formulaire extends Application {
         buttonQuit.setOnAction(value -> {
             textInput.setText("GoodBye World !");
             textLocked.setText(textInput.getText());
-            //créer une PauseTransition de 3 secondes
+            //créer une PauseTransition de 1 secondes
             PauseTransition delay = new PauseTransition(Duration.seconds(1));
             //définition de l'action suite à la pause
             delay.setOnFinished(e -> stage.close());

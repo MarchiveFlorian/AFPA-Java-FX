@@ -54,14 +54,16 @@ public class Formulaire extends Application {
         VBox vboxDisplay = new VBox(vbox);
 
         // Settings
-        vbox.setSpacing(20);
+        stage.setMaxHeight(260);
+        stage.setMaxWidth(600);
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-border-style: solid inside;" +
                 "-fx-border-width: 2;" +
                 "-fx-border-insets: 5;" +
                 "-fx-border-radius: 5;" +
-                "-fx-border-color: #0d70a3;"+
-                "-fx-background-color : #ede9e3");
+                "-fx-border-color: #34a4df;"+
+                "-fx-background-color : #ede9e3"+
+                "-fx-effect: dropshadow: (gaussian, black, 7, 6, 0, -1 ;");
         vbox.setMaxWidth(539);
 
         vboxDisplay.setAlignment(Pos.CENTER);
@@ -69,13 +71,13 @@ public class Formulaire extends Application {
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(20);
         gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 5, 20, 5));
+        gridPane.setPadding(new Insets(30, 5, 20, 5));
         gridPane.setStyle("-fx-background-color : #ede9e3");
 
         labelForm.setFont(new Font(18));
         labelForm.setTextFill(Color.WHITE);
-        labelForm.setStyle("-fx-background-color : #0d70a3");
-        labelForm.setPadding(new Insets(10, 220, 10, 220));
+        labelForm.setStyle("-fx-background-color : linear-gradient(to right, #155E83 0%, #0a78b1 50%, #155E83 100%);");
+        labelForm.setPadding(new Insets(5, 220, 5, 220));
 
         textInput.setText("Saississez un texte");
         textInput.setPrefWidth(textFieldWidth);

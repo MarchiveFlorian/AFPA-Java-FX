@@ -16,7 +16,7 @@ import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
 /**
- * JavaFX App affichage d'un Hello World
+ * JavaFX App affichage d'un formulaire
  */
 public class Formulaire extends Application {
 
@@ -57,12 +57,11 @@ public class Formulaire extends Application {
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-border-style: solid inside;" +
                 "-fx-border-width: 2;" +
-                "-fx-border-insets: 5;" +
                 "-fx-border-radius: 5;" +
                 "-fx-border-color: #34a4df;" +
-                "-fx-background-color : #ede9e3" +
-                "-fx-effect: dropshadow: (gaussian, black, 7, 6, 0, -1 ;");
-        vbox.setMaxWidth(539);
+                "-fx-background-color : #ede9e3;" +
+                "-fx-effect: dropshadow(gaussian,  grey, 10, 0, 5, 5);");
+        vbox.setMaxWidth(529);
 
         vboxDisplay.setAlignment(Pos.CENTER);
 

@@ -8,16 +8,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.animation.PauseTransition;
-import javafx.util.Duration;
 
 /**
  * JavaFX App affichage d'un Hello World
@@ -78,11 +74,10 @@ public class Additionneur extends Application {
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-border-style: solid inside;" +
                 "-fx-border-width: 2;" +
-                "-fx-border-insets: 5;" +
                 "-fx-border-radius: 5;" +
                 "-fx-border-color: #34a4df;" +
                 "-fx-background-color : #ede9e3");
-        vbox.setMaxWidth(559);
+        vbox.setMaxWidth(549);
         vbox.setSpacing(10);
 
         vboxDisplay.setAlignment(Pos.CENTER);
@@ -133,6 +128,11 @@ public class Additionneur extends Application {
                 return;
             }
 
+            int lastEqualIndex = textValue.lastIndexOf('=');
+            if (lastEqualIndex != -1) {
+                textValue = textValue.substring(lastEqualIndex + 1).trim();
+            }
+
             if (textValue.endsWith("+")) {
                 textValue = textValue.substring(0, textValue.length() - 1);
             }
@@ -147,13 +147,14 @@ public class Additionneur extends Application {
                     return;
                 }
             }
-            currentSum += sum;
+            currentSum = sum;
             textArea.setText(textValue + " = " + currentSum + " +");
         });
         buttonCalcul.setPrefWidth(buttonWidth);
 
         buttonClear.setOnAction(value -> {
             textArea.clear();
+            currentSum = 0; 
         });
         buttonClear.setPrefWidth(buttonWidth);
 

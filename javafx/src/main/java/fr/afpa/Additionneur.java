@@ -10,6 +10,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -21,6 +23,9 @@ import javafx.util.Duration;
  * JavaFX App affichage d'un Hello World
  */
 public class Additionneur extends Application {
+
+    // sert pour le boutonCalcul
+    private int currentSum = 0;
 
     public static void main(String[] args) {
         launch();
@@ -52,12 +57,24 @@ public class Additionneur extends Application {
         scrollPane.setPrefWidth(400);
         scrollPane.setPrefHeight(180);
 
-        VBox vboxNumbers = new VBox(button0, button1, button2, button3, button4, button5, button6, button7, button8, button9);
-        Vbox vbox
-        VBox vbox = new VBox(labelTitle, scrollPane, vboxNumbers);
+        TilePane tilePane = new TilePane(button0, button1, button2, button3, button4, button5, button6, button7, button8, button9);
+        
+
+        VBox vboxNumbers = new VBox(tilePane);
+        HBox hboxButtons = new HBox(buttonCalcul, buttonClear);
+        VBox vbox = new VBox(labelTitle, scrollPane, vboxNumbers, hboxButtons);
         VBox vboxDisplay = new VBox(vbox);
 
         // Settings
+        stage.setMaxHeight(600);
+        stage.setMaxWidth(600);
+
+        tilePane.setTileAlignment(Pos.CENTER);
+        tilePane.setHgap(10);
+        tilePane.setVgap(10);
+
+        hboxButtons.setSpacing(10);
+
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-border-style: solid inside;" +
                 "-fx-border-width: 2;" +
@@ -65,7 +82,8 @@ public class Additionneur extends Application {
                 "-fx-border-radius: 5;" +
                 "-fx-border-color: #34a4df;" +
                 "-fx-background-color : #ede9e3");
-        vbox.setMaxWidth(539);
+        vbox.setMaxWidth(559);
+        vbox.setSpacing(10);
 
         vboxDisplay.setAlignment(Pos.CENTER);
 
@@ -76,17 +94,63 @@ public class Additionneur extends Application {
 
         textArea.setText("Saississez votre addition");
 
-        buttonCalcul.setOnAction(value ->{
-            int values = Integer.parseInt(textArea.getText());
-            int[] intArray = {values};
-            System.out.println(intArray);
-            int sums = 0;
-            for (int  n : intArray) {
-                sums += n;
-            }    
+        button0.setOnAction(value -> {
+            textArea.setText(textArea.getText() + "0 +");
+        });
+        button1.setOnAction(value -> {
+            textArea.setText(textArea.getText() + "1 +");
+        });
+        button2.setOnAction(value -> {
+            textArea.setText(textArea.getText() + "2 +");
+        });
+        button3.setOnAction(value -> {
+            textArea.setText(textArea.getText() + "3 +");
+        });
+        button4.setOnAction(value -> {
+            textArea.setText(textArea.getText() + "4 +");
+        });
+        button5.setOnAction(value -> {
+            textArea.setText(textArea.getText() + "5 +");
+        });
+        button6.setOnAction(value -> {
+            textArea.setText(textArea.getText() + "6 +");
+        });
+        button7.setOnAction(value -> {
+            textArea.setText(textArea.getText() + "7 +");
+        });
+        button8.setOnAction(value -> {
+            textArea.setText(textArea.getText() + "8 +");
+        });
+        button9.setOnAction(value -> {
+            textArea.setText(textArea.getText() + "9 +");
         });
 
+        buttonCalcul.setOnAction(value -> {
+            String textValue = textArea.getText().trim();
 
+            if (textValue.isEmpty()) {
+                textArea.setText("Aucune valeur entrée !");
+                return;
+            }
+
+            if (textValue.endsWith("+")) {
+                textValue = textValue.substring(0, textValue.length() - 1);
+            }
+
+            String[] strValues = textValue.split("\\+");
+            int sum = 0;
+            for (String str : strValues) {
+                try {
+                    sum += Integer.parseInt(str.trim());
+                } catch (NumberFormatException e) {
+                    textArea.setText("Erreur : Entrée non valide");
+                    return;
+                }
+            }
+            currentSum += sum;
+            textArea.setText(textValue + " = " + currentSum + " +");
+        });
+        buttonCalcul.setPrefWidth(buttonWidth);
 
         buttonClear.setOnAction(value -> {
             textArea.clear();
@@ -98,5 +162,4 @@ public class Additionneur extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
 }

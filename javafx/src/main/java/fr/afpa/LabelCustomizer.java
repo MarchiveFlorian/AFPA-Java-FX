@@ -52,9 +52,9 @@ public class LabelCustomizer extends Application {
         RadioButton radioButtonBgColor3 = new RadioButton(color3);
         VBox radioButtonBgColor = new VBox(radioButtonBgColor1, radioButtonBgColor2, radioButtonBgColor3);
 
-        Slider slider1 = new Slider(0, 100, 0);
-        Slider slider2 = new Slider(0, 100, 0);
-        Slider slider3 = new Slider(0, 100, 0);
+        Slider slider1 = new Slider(0, 255, 0);
+        Slider slider2 = new Slider(0, 255, 0);
+        Slider slider3 = new Slider(0, 255, 0);
         VBox sliders = new VBox(labelSlider1, slider1, labelSlider2, slider2, labelSlider3, slider3);
 
         RadioButton radioButtonUpperCase = new RadioButton("Majuscule");
@@ -94,11 +94,70 @@ public class LabelCustomizer extends Application {
         textInput.setText("");
         textInput.setPrefWidth(textFieldWidth);
 
+        // Gestion customisation du label
+        String initialStyle = labelHidden.getStyle();
+
+        radioButtonBgColor1.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                labelHidden.setStyle("-fx-background-color: Red");
+            } else {
+                labelHidden.setStyle(initialStyle);
+            }
+        });
+
+        radioButtonBgColor2.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                labelHidden.setStyle("-fx-background-color: Green");
+            } else {
+                labelHidden.setStyle(initialStyle);
+            }
+        });
+
+        radioButtonBgColor3.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                labelHidden.setStyle("-fx-background-color: Blue");
+            } else {
+                labelHidden.setStyle(initialStyle);
+            }
+        });
+
+        radioButtonUpperCase.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            labelHidden.setText(labelHidden.getText().toUpperCase());
+        });
+
+        radioButtonLowerCase.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            labelHidden.setText(labelHidden.getText().toLowerCase());
+        });
+
+        slider1.valueProperty().addListener((observable, oldValue, newValue) -> {
+            int red = newValue.intValue();
+            int green = (int) slider2.getValue();
+            int blue = (int) slider3.getValue();
+            Color textColor = Color.rgb(red, green, blue);
+            labelHidden.setTextFill(textColor);
+        });
+
+        slider2.valueProperty().addListener((observable, oldValue, newValue) -> {
+            int red = (int) slider1.getValue();
+            int green = newValue.intValue();
+            int blue = (int) slider3.getValue();
+            Color textColor = Color.rgb(red, green, blue);
+            labelHidden.setTextFill(textColor);
+        });
+
+        slider3.valueProperty().addListener((observable, oldValue, newValue) -> {
+            int red = (int) slider1.getValue();
+            int green = (int) slider2.getValue();
+            int blue = newValue.intValue();
+            Color textColor = Color.rgb(red, green, blue);
+            labelHidden.setTextFill(textColor);
+        });
+
         // Gestion visibilité
         slider1.setShowTickLabels(true);
         slider2.setShowTickLabels(true);
         slider3.setShowTickLabels(true);
-        
+
         titledPaneSettings.setExpanded(false);
 
         labelHidden.setVisible(false);
@@ -106,7 +165,6 @@ public class LabelCustomizer extends Application {
         titlePaneChColor.setVisible(false);
         titlePaneChCase.setVisible(false);
 
-        // Event Handlers
         textInput.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.trim().isEmpty()) {
                 labelHidden.setVisible(true);
@@ -129,7 +187,7 @@ public class LabelCustomizer extends Application {
         checkBoxChCase.selectedProperty().addListener((observable, oldValue, newValue) -> {
             titlePaneChCase.setVisible(newValue);
         });
-        
+
         // savoir si checkbox cochée: boolean isSelected = checkBox1.isSelected();
 
         // Assemblage

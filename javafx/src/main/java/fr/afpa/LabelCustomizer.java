@@ -30,7 +30,7 @@ public class LabelCustomizer extends Application {
     public void start(Stage stage) {
 
         // Instanciations
-        Label labelForm = new Label("Checkbox - RadioButton - Slider");
+        Label labelForm = new Label("Customizer");
         Label labelHidden = new Label("Je suis invisible");
         Label labelTextInput = new Label("Saississez votre texte");
         TextField textInput = new TextField();
@@ -67,24 +67,46 @@ public class LabelCustomizer extends Application {
         TitledPane titlePaneChCase = new TitledPane("Casse", radioButtonChCase);
 
         VBox vboxText = new VBox(labelTextInput, textInput, labelHidden);
+        
 
         GridPane gridPane = new GridPane();
         gridPane.add(vboxText, 0, 0);
         gridPane.add(titledPaneSettings, 1, 0);
 
+
         VBox vbox = new VBox(labelForm, gridPane);
         HBox hbox = new HBox(titlePaneBgColor, titlePaneChColor, titlePaneChCase);
-        VBox vboxDisplay = new VBox(vbox, hbox);
+        VBox vboxCss = new VBox(vbox, hbox);
+        VBox vboxDisplay = new VBox(vboxCss);
 
         // Settings
-        vboxDisplay.setAlignment(Pos.CENTER);
-        vboxDisplay.setStyle("-fx-border-style: solid inside;" +
+        stage.setMaxHeight(500);
+        stage.setMaxWidth(600);
+        vboxCss.setAlignment(Pos.CENTER);
+        vboxCss.setStyle("-fx-border-style: solid inside;" +
                 "-fx-border-width: 2;" +
                 "-fx-border-radius: 5;" +
                 "-fx-border-color: #34a4df;" +
                 "-fx-background-color : #ede9e3;" +
                 "-fx-effect: dropshadow(gaussian,  grey, 10, 0, 5, 5);");
-        vboxDisplay.setMaxWidth(529);
+        vboxCss.setMaxWidth(534);
+
+        vboxDisplay.setAlignment(Pos.CENTER);
+
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setFillWidth(true);
+
+        vboxText.setSpacing(10);
+        vboxText.setPadding(new Insets(20, 0 , 20, 0));
+
+        hbox.setAlignment(Pos.BASELINE_CENTER);
+        hbox.setFillHeight(true);
+        hbox.setSpacing(10);
+        hbox.setPadding(new Insets(0, 0 , 20, 0));
+
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
 
         labelForm.setFont(new Font(18));
         labelForm.setTextFill(Color.WHITE);
@@ -187,8 +209,6 @@ public class LabelCustomizer extends Application {
         checkBoxChCase.selectedProperty().addListener((observable, oldValue, newValue) -> {
             titlePaneChCase.setVisible(newValue);
         });
-
-        // savoir si checkbox cochée: boolean isSelected = checkBox1.isSelected();
 
         // Assemblage
         Scene scene = new Scene(vboxDisplay, 640, 480);

@@ -8,20 +8,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
- * JavaFX App affichage d'un Hello World
+ * JavaFX App affichage d'un additionneur
  */
 public class Additionneur extends Application {
 
     // sert pour le boutonCalcul
     private int currentSum = 0;
+    private String accumulatedExpression = "";
 
     public static void main(String[] args) {
         launch();
@@ -49,27 +50,45 @@ public class Additionneur extends Application {
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(textArea);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setPrefWidth(400);
-        scrollPane.setPrefHeight(180);
 
-        TilePane tilePane = new TilePane(button0, button1, button2, button3, button4, button5, button6, button7, button8, button9);
-        
+        GridPane gridPane = new GridPane();
+        gridPane.add(button0, 0, 0);
+        gridPane.add(button1, 1, 0);
+        gridPane.add(button2, 2, 0);
+        gridPane.add(button3, 3, 0);
+        gridPane.add(button4, 4, 0);
+        gridPane.add(button5, 0, 1);
+        gridPane.add(button6, 1, 1);
+        gridPane.add(button7, 2, 1);
+        gridPane.add(button8, 3, 1);
+        gridPane.add(button9, 4, 1);
 
-        VBox vboxNumbers = new VBox(tilePane);
+        VBox vboxNumbers = new VBox(gridPane);
         HBox hboxButtons = new HBox(buttonCalcul, buttonClear);
         VBox vbox = new VBox(labelTitle, scrollPane, vboxNumbers, hboxButtons);
         VBox vboxDisplay = new VBox(vbox);
 
         // Settings
-        stage.setMaxHeight(600);
-        stage.setMaxWidth(600);
+        stage.setMaxHeight(400);
+        stage.setMaxWidth(450);
 
-        tilePane.setTileAlignment(Pos.CENTER);
-        tilePane.setHgap(10);
-        tilePane.setVgap(10);
+        labelTitle.setFont(new Font(18));
+        labelTitle.setTextFill(Color.WHITE);
+        labelTitle.setStyle("-fx-background-color : linear-gradient(to right, #155E83 0%, #0a78b1 50%, #155E83 100%);");
+        labelTitle.setPadding(new Insets(5, 150, 5, 150));
+        labelTitle.setMinWidth(400);
 
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+
+        scrollPane.setFitToWidth(true);
+        scrollPane.setMaxWidth(250);
+        scrollPane.setMaxHeight(100);
+
+        hboxButtons.setAlignment(Pos.CENTER);
         hboxButtons.setSpacing(10);
+        hboxButtons.setPadding(new Insets(0, 0, 20, 0));
 
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-border-style: solid inside;" +
@@ -77,17 +96,14 @@ public class Additionneur extends Application {
                 "-fx-border-radius: 5;" +
                 "-fx-border-color: #34a4df;" +
                 "-fx-background-color : #ede9e3");
-        vbox.setMaxWidth(549);
+        vbox.setMaxWidth(409);
         vbox.setSpacing(10);
+
+        vboxNumbers.setAlignment(Pos.CENTER);
 
         vboxDisplay.setAlignment(Pos.CENTER);
 
-        labelTitle.setFont(new Font(18));
-        labelTitle.setTextFill(Color.WHITE);
-        labelTitle.setStyle("-fx-background-color : linear-gradient(to right, #155E83 0%, #0a78b1 50%, #155E83 100%);");
-        labelTitle.setPadding(new Insets(5, 220, 5, 220));
-
-        textArea.setText("Saississez votre addition");
+        textArea.setText("Videz et saississez votre addition");
 
         button0.setOnAction(value -> {
             textArea.setText(textArea.getText() + "0 +");
@@ -147,14 +163,17 @@ public class Additionneur extends Application {
                     return;
                 }
             }
+
+            accumulatedExpression += textValue + "+";
             currentSum = sum;
-            textArea.setText(textValue + " = " + currentSum + " +");
+            textArea.setText(accumulatedExpression + "= " + currentSum + " +");
         });
         buttonCalcul.setPrefWidth(buttonWidth);
 
         buttonClear.setOnAction(value -> {
             textArea.clear();
-            currentSum = 0; 
+            accumulatedExpression = "";
+            currentSum = 0;
         });
         buttonClear.setPrefWidth(buttonWidth);
 

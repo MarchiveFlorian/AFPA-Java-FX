@@ -31,7 +31,7 @@ public class LabelCustomizer extends Application {
 
         // Instanciations
         Label labelForm = new Label("Customizer");
-        Label labelHidden = new Label("Je suis invisible");
+        Label labelHidden = new Label("");
         Label labelTextInput = new Label("Saississez votre texte");
         TextField textInput = new TextField();
         Double textFieldWidth = 250.0;
@@ -67,12 +67,10 @@ public class LabelCustomizer extends Application {
         TitledPane titlePaneChCase = new TitledPane("Casse", radioButtonChCase);
 
         VBox vboxText = new VBox(labelTextInput, textInput, labelHidden);
-        
 
         GridPane gridPane = new GridPane();
         gridPane.add(vboxText, 0, 0);
         gridPane.add(titledPaneSettings, 1, 0);
-
 
         VBox vbox = new VBox(labelForm, gridPane);
         HBox hbox = new HBox(titlePaneBgColor, titlePaneChColor, titlePaneChCase);
@@ -97,12 +95,12 @@ public class LabelCustomizer extends Application {
         vbox.setFillWidth(true);
 
         vboxText.setSpacing(10);
-        vboxText.setPadding(new Insets(20, 0 , 20, 0));
+        vboxText.setPadding(new Insets(20, 0, 20, 0));
 
         hbox.setAlignment(Pos.BASELINE_CENTER);
         hbox.setFillHeight(true);
         hbox.setSpacing(10);
-        hbox.setPadding(new Insets(0, 0 , 20, 0));
+        hbox.setPadding(new Insets(0, 0, 20, 0));
 
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10);
@@ -113,67 +111,7 @@ public class LabelCustomizer extends Application {
         labelForm.setStyle("-fx-background-color : linear-gradient(to right, #155E83 0%, #0a78b1 50%, #155E83 100%);");
         labelForm.setPadding(new Insets(5, 220, 5, 220));
 
-        textInput.setText("");
         textInput.setPrefWidth(textFieldWidth);
-
-        // Gestion customisation du label
-        String initialStyle = labelHidden.getStyle();
-
-        radioButtonBgColor1.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                labelHidden.setStyle("-fx-background-color: Red");
-            } else {
-                labelHidden.setStyle(initialStyle);
-            }
-        });
-
-        radioButtonBgColor2.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                labelHidden.setStyle("-fx-background-color: Green");
-            } else {
-                labelHidden.setStyle(initialStyle);
-            }
-        });
-
-        radioButtonBgColor3.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                labelHidden.setStyle("-fx-background-color: Blue");
-            } else {
-                labelHidden.setStyle(initialStyle);
-            }
-        });
-
-        radioButtonUpperCase.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            labelHidden.setText(labelHidden.getText().toUpperCase());
-        });
-
-        radioButtonLowerCase.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            labelHidden.setText(labelHidden.getText().toLowerCase());
-        });
-
-        slider1.valueProperty().addListener((observable, oldValue, newValue) -> {
-            int red = newValue.intValue();
-            int green = (int) slider2.getValue();
-            int blue = (int) slider3.getValue();
-            Color textColor = Color.rgb(red, green, blue);
-            labelHidden.setTextFill(textColor);
-        });
-
-        slider2.valueProperty().addListener((observable, oldValue, newValue) -> {
-            int red = (int) slider1.getValue();
-            int green = newValue.intValue();
-            int blue = (int) slider3.getValue();
-            Color textColor = Color.rgb(red, green, blue);
-            labelHidden.setTextFill(textColor);
-        });
-
-        slider3.valueProperty().addListener((observable, oldValue, newValue) -> {
-            int red = (int) slider1.getValue();
-            int green = (int) slider2.getValue();
-            int blue = newValue.intValue();
-            Color textColor = Color.rgb(red, green, blue);
-            labelHidden.setTextFill(textColor);
-        });
 
         // Gestion visibilité
         slider1.setShowTickLabels(true);
@@ -208,6 +146,73 @@ public class LabelCustomizer extends Application {
 
         checkBoxChCase.selectedProperty().addListener((observable, oldValue, newValue) -> {
             titlePaneChCase.setVisible(newValue);
+        });
+
+        // Gestion customisation du label
+        String initialStyle = labelHidden.getStyle();
+
+        radioButtonBgColor1.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                labelHidden.setStyle("-fx-background-color: Red");
+            } else {
+                labelHidden.setStyle(initialStyle);
+            }
+        });
+
+        radioButtonBgColor2.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                labelHidden.setStyle("-fx-background-color: Green");
+            } else {
+                labelHidden.setStyle(initialStyle);
+            }
+        });
+
+        radioButtonBgColor3.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                labelHidden.setStyle("-fx-background-color: Blue");
+            } else {
+                labelHidden.setStyle(initialStyle);
+            }
+        });
+
+        radioButtonUpperCase.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                labelHidden.setText(labelHidden.getText().toUpperCase());
+            } else {
+                labelHidden.setText(textInput.getText());
+            }
+        });
+
+        radioButtonLowerCase.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                labelHidden.setText(labelHidden.getText().toLowerCase());
+            } else {
+                labelHidden.setText(textInput.getText());
+            }
+        });
+
+        slider1.valueProperty().addListener((observable, oldValue, newValue) -> {
+            int red = newValue.intValue();
+            int green = (int) slider2.getValue();
+            int blue = (int) slider3.getValue();
+            Color textColor = Color.rgb(red, green, blue);
+            labelHidden.setTextFill(textColor);
+        });
+
+        slider2.valueProperty().addListener((observable, oldValue, newValue) -> {
+            int red = (int) slider1.getValue();
+            int green = newValue.intValue();
+            int blue = (int) slider3.getValue();
+            Color textColor = Color.rgb(red, green, blue);
+            labelHidden.setTextFill(textColor);
+        });
+
+        slider3.valueProperty().addListener((observable, oldValue, newValue) -> {
+            int red = (int) slider1.getValue();
+            int green = (int) slider2.getValue();
+            int blue = newValue.intValue();
+            Color textColor = Color.rgb(red, green, blue);
+            labelHidden.setTextFill(textColor);
         });
 
         // Assemblage

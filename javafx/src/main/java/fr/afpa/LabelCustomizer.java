@@ -17,9 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-
 /**
- * JavaFX App affichage d'un outil de modification visuel d'un texte
+ * JavaFX App affichage d'un outil de modification visuel d'un label
  */
 public class LabelCustomizer extends Application {
 
@@ -78,7 +77,6 @@ public class LabelCustomizer extends Application {
         VBox vboxDisplay = new VBox(vbox, hbox);
 
         // Settings
-
         vboxDisplay.setAlignment(Pos.CENTER);
         vboxDisplay.setStyle("-fx-border-style: solid inside;" +
                 "-fx-border-width: 2;" +
@@ -88,11 +86,6 @@ public class LabelCustomizer extends Application {
                 "-fx-effect: dropshadow(gaussian,  grey, 10, 0, 5, 5);");
         vboxDisplay.setMaxWidth(529);
 
-        slider1.setShowTickLabels(true);
-        slider2.setShowTickLabels(true);
-        slider3.setShowTickLabels(true);
-        titledPaneSettings.setExpanded(false);
-
         labelForm.setFont(new Font(18));
         labelForm.setTextFill(Color.WHITE);
         labelForm.setStyle("-fx-background-color : linear-gradient(to right, #155E83 0%, #0a78b1 50%, #155E83 100%);");
@@ -101,6 +94,42 @@ public class LabelCustomizer extends Application {
         textInput.setText("");
         textInput.setPrefWidth(textFieldWidth);
 
+        // Gestion visibilité
+        slider1.setShowTickLabels(true);
+        slider2.setShowTickLabels(true);
+        slider3.setShowTickLabels(true);
+        
+        titledPaneSettings.setExpanded(false);
+
+        labelHidden.setVisible(false);
+        titlePaneBgColor.setVisible(false);
+        titlePaneChColor.setVisible(false);
+        titlePaneChCase.setVisible(false);
+
+        // Event Handlers
+        textInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.trim().isEmpty()) {
+                labelHidden.setVisible(true);
+                labelHidden.setText(newValue);
+                titledPaneSettings.setExpanded(true);
+            } else {
+                labelHidden.setVisible(false);
+                titledPaneSettings.setExpanded(false);
+            }
+        });
+
+        checkBoxBgColor.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            titlePaneBgColor.setVisible(newValue);
+        });
+
+        checkBoxChColor.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            titlePaneChColor.setVisible(newValue);
+        });
+
+        checkBoxChCase.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            titlePaneChCase.setVisible(newValue);
+        });
+        
         // savoir si checkbox cochée: boolean isSelected = checkBox1.isSelected();
 
         // Assemblage

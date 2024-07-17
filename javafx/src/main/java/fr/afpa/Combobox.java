@@ -1,6 +1,9 @@
 package fr.afpa;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -34,24 +37,26 @@ public class Combobox extends Application {
         Button upElement = new Button("Haut");
         Button downElement = new Button("Bas");
         Button quitButton = new Button("Quitter");
-        String pays1 = "Belgique";
-        String pays2 = "France";
-        String pays3 = "Angleterre";
         Double buttonWidth = 100.0;
         Double textFieldWidth = 250.0;
 
-        ComboBox comboBox = new ComboBox();
-        comboBox.getItems().add(pays1);
-        comboBox.getItems().add(pays2);
-        comboBox.getItems().add(pays3);
+        ObservableList<Country> comboBoxList = FXCollections.observableArrayList();
+        comboBoxList.add(new Country("Belgique", "BEL"));
+        comboBoxList.add(new Country("France", "FRA"));
+        comboBoxList.add(new Country("Angleterre", "GBR"));
+        comboBoxList.add(new Country("Allemagne", "DEU"));
+        comboBoxList.add(new Country("Espagne", "ESP"));
+        comboBoxList.add(new Country("Portugal", "PRT"));
 
-        ListView listView = new ListView();
+        ComboBox<Country> comboBox = new ComboBox<>(comboBoxList);
 
-        VBox vbox = new VBox(labelForm);
+        ListView<Country> listView = new ListView<>();
+
+        VBox vbox = new VBox(labelForm, comboBox, addButton, addAllButton, getButton, getAllButton, upElement, downElement, listView, quitButton);
         VBox vboxDisplay = new VBox(vbox);
 
         // Settings
-        stage.setMaxHeight(260);
+        stage.setMaxHeight(600);
         stage.setMaxWidth(600);
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-border-style: solid inside;" +
@@ -68,6 +73,38 @@ public class Combobox extends Application {
         labelForm.setTextFill(Color.WHITE);
         labelForm.setStyle("-fx-background-color : linear-gradient(to right, #155E83 0%, #0a78b1 50%, #155E83 100%);");
         labelForm.setPadding(new Insets(5, 220, 5, 220));
+
+        addButton.setOnAction(value -> {
+            listView.getItems().add(comboBox.getValue());
+            comboBox.getItems().remove(comboBox.getValue());
+        });
+
+        addAllButton.setOnAction(value -> {
+            listView.getItems().addAll(comboBox.getItems());
+            comboBox.getItems().clear();
+        });
+
+        getButton.setOnAction(value -> {
+            comboBox.getItems().add(listView.getSelectionModel().getSelectedItem());
+            listView.getItems().remove(listView.getSelectionModel().getSelectedItem());
+        });
+
+        getAllButton.setOnAction(value -> {
+            comboBox.getItems().addAll(listView.getItems());
+            listView.getItems().clear();
+        });
+
+        upElement.setOnAction(value -> {
+            ListViewMoveManager.moveSelectedItemUp(listView);
+        });
+
+        downElement.setOnAction(value -> {
+            ListViewMoveManager.moveSelectedItemDown(listView);
+        });
+
+        quitButton.setOnAction(value -> {
+            Platform.exit();
+        });
 
         // Assemblage
         Scene scene = new Scene(vboxDisplay, 640, 480);
